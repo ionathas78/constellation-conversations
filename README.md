@@ -18,7 +18,7 @@ The portable site is in `dist/`. Serve that directory with any static web server
 
 1. Register speakers in `content/speakers.json` and copy assets into `public/assets/`.
 2. Add a JSON file in `content/conversations/`, following [the authoring guide](docs/AUTHORING.md) and [the schema](content/schema.json). Write Markdown in each message's `body`.
-3. Set `published: true`, run `npm run check`, and commit to `main`.
+3. Set `published: true`, run `npm run ids` then `npm run check`, and commit to `main`.
 4. GitHub Actions tests, builds, and deploys to Pages. Publication URLs are `/conversations/<id>/`; keep IDs stable after publication.
 
 The build generates the homepage as a welcome state, the sole published conversation, or a library according to the number of published items. There is no redirect. A demo counts as a published item; set its `published` field to false if only the inaugural publication should appear.

@@ -1,3 +1,4 @@
+import {messageUUID,validateMessageUUIDs} from './message-ids.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -67,9 +68,10 @@ export function validateReadingOrder(items){
 function conversation(c){
  let previous;
  const messages=c.messages.map(m=>{
+ const uuid=messageUUID(c,m),permalink=`<a class="message-permalink" href="#${uuid}" aria-label="Link to message by ${escape(speakers[m.speaker].name)}" title="Copy this link to share this message">#</a>`;
  const s=speakers[m.speaker],grouped=previous===m.speaker;previous=m.speaker;
  const isEmoji=/^[\p{Extended_Pictographic}\p{Emoji_Component}\s\u200d\ufe0f]+$/u.test(m.body)&&/[\p{Extended_Pictographic}\p{Regional_Indicator}\u20e3]/u.test(m.body)&&m.body.length<40;
- return `<article class="message ${grouped?'grouped':''} ${isEmoji?'emoji-only':''} ${m.effect?'effect-'+m.effect:''}" id="${escape(m.id)}" aria-label="${escape(s.name)}"><div class="avatar-slot">${grouped?'':avatar(m.speaker,c,speakers)}</div><div class="message-main">${grouped?`<span class="sr-only">${escape(s.name)} continues:</span>`:`<h3>${escape(s.name)} <a href="#${escape(m.id)}" aria-label="Link to message by ${escape(s.name)}">#</a></h3>`}<div class="message-body">${markdown(m.body)}</div>${m.sticker?emojiAsset(m.sticker,'sticker'):''}${m.attachments?.length?`<div class="attachments">${m.attachments.map(attachment).join('')}</div>`:''}${m.dice?`<div class="dice-widget" data-expression="${escape(m.dice)}"><span class="dice-label">◇ ${escape(m.dice)}</span><button type="button" data-roll hidden>Roll dice</button><output aria-live="polite">Interactive roll available with JavaScript.</output></div>`:''}${m.reactions?.length?`<ul class="reactions" aria-label="Recorded reactions">${m.reactions.map(r=>`<li>${escape(r.emoji)} <span>${r.count}</span><span class="sr-only"> reactions</span></li>`).join('')}</ul>`:''}</div></article>`;
+ return `<article class="message ${grouped?'grouped':''} ${isEmoji?'emoji-only':''} ${m.effect?'effect-'+m.effect:''}" id="${uuid}" aria-label="${escape(s.name)}"><span class="message-anchor" id="${escape(m.id)}" aria-hidden="true"></span><div class="avatar-slot">${grouped?'':avatar(m.speaker,c,speakers)}</div><div class="message-main">${grouped?`<span class="sr-only">${escape(s.name)} continues:</span>${permalink}`:`<h3>${escape(s.name)} ${permalink}</h3>`}<div class="message-body">${markdown(m.body)}</div>${m.sticker?emojiAsset(m.sticker,'sticker'):''}${m.attachments?.length?`<div class="attachments">${m.attachments.map(attachment).join('')}</div>`:''}${m.dice?`<div class="dice-widget" data-expression="${escape(m.dice)}"><span class="dice-label">◇ ${escape(m.dice)}</span><button type="button" data-roll hidden>Roll dice</button><output aria-live="polite">Interactive roll available with JavaScript.</output></div>`:''}${m.reactions?.length?`<ul class="reactions" aria-label="Recorded reactions">${m.reactions.map(r=>`<li>${escape(r.emoji)} <span>${r.count}</span><span class="sr-only"> reactions</span></li>`).join('')}</ul>`:''}</div></article>`;
  }).join('');
  let story='';if(c.story){
  const rendered=Object.fromEntries(Object.entries(c.story.nodes).map(([id,n])=>[id,{...n,html:markdown(n.body)}]));
@@ -94,6 +96,7 @@ export async function build(){
  const all=await Promise.all(files.map(f=>read('content/conversations/'+f)));const validator=new Ajv({allErrors:true}).compile(await read('content/schema.json'));
  const seen=new Set();for(const c of all){await validate(c,validator);if(seen.has(c.id))throw Error('Duplicate publication id');seen.add(c.id);}
  validateReadingOrder(all);
+ validateMessageUUIDs(all);
  conversations=all.filter(c=>c.published).sort((a,b)=>b.date.localeCompare(a.date)||a.id.localeCompare(b.id));
  const out=path.join(root,'dist');await fs.mkdir(out,{recursive:true});for(const child of await fs.readdir(out))await fs.rm(path.join(out,child),{recursive:true,force:true});await fs.cp(path.join(root,'public'),out,{recursive:true});
  await fs.mkdir(path.join(out,'assets/vendor'),{recursive:true});await fs.copyFile(path.join(root,'node_modules/katex/dist/katex.min.css'),path.join(out,'assets/vendor/katex.min.css'));await fs.cp(path.join(root,'node_modules/katex/dist/fonts'),path.join(out,'assets/vendor/fonts'),{recursive:true});

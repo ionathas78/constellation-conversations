@@ -26,23 +26,27 @@
           "emoji": "✨",
           "count": 3
         }
-      ]
+      ],
+      "uuid": "41198e7f-f6c8-58db-a0af-85270a418cb5"
     },
     {
       "id": "reply",
       "speaker": "jonathan",
-      "body": "And occasionally that door needs a good dice roll."
+      "body": "And occasionally that door needs a good dice roll.",
+      "uuid": "6561f306-2645-5cb5-b80b-3fbc50ab63f5"
     },
     {
       "id": "emoji",
       "speaker": "guide",
-      "body": "✨ 🌙"
+      "body": "✨ 🌙",
+      "uuid": "94e10168-3076-5afc-9598-e27d9fbacf8b"
     },
     {
       "id": "format",
       "speaker": "guide",
       "body": "### A few things in our pockets\n\n- *Emphasis*, **conviction**, and [a useful link](https://en.wikipedia.org/wiki/Observatory).\n- A table for keeping our thoughts in order.\n- Code, when the words need to be precise.\n\n| Instrument | Purpose |\n| --- | --- |\n| Telescope | Look farther |\n| Notebook | Look again |\n\n```js\nconst wonder = questions.length > 0;\n```\n\nThe expected value of a fair die is $E[X] = \\frac{n+1}{2}$.\n\nAnd a little custom starlight: :spark:",
-      "effect": "glow"
+      "effect": "glow",
+      "uuid": "299c9833-61ed-5cb9-b8bd-3f7a4cd8ddf0"
     },
     {
       "id": "view",
@@ -61,19 +65,22 @@
           "alt": "An angular golden star.",
           "caption": "The smallest constellation."
         }
-      ]
+      ],
+      "uuid": "eaca4504-1d58-5290-b5ce-dbf9a47c55bb"
     },
     {
       "id": "dice",
       "speaker": "jonathan",
       "body": "Let's see what the evening has in store.",
-      "dice": "2d20kh1+3"
+      "dice": "2d20kh1+3",
+      "uuid": "ffef8b03-d08f-55fe-9f58-fd57657bb836"
     },
     {
       "id": "sticker",
       "speaker": "guide",
       "body": "One for the road.",
-      "sticker": "spark"
+      "sticker": "spark",
+      "uuid": "00afcdfa-9d73-5ab4-a26b-9a756817905b"
     },
     {
       "id": "media",
@@ -94,7 +101,8 @@
           "transcript": "The observatory illustration gently fades in and holds. No dialogue or sound.",
           "captions": "/assets/observatory.vtt"
         }
-      ]
+      ],
+      "uuid": "089b22da-90b1-5a5c-9f75-0c7af8abb7b7"
     },
     {
       "id": "links",
@@ -118,7 +126,8 @@
           "src": "/assets/field-notes.txt",
           "title": "Download the field notes"
         }
-      ]
+      ],
+      "uuid": "6e4536b5-49c7-5567-b31c-15ddca9ab3df"
     }
   ],
   "story": {

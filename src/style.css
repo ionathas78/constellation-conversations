@@ -16,3 +16,9 @@
 .sequence-nav span{font-size:10px;color:var(--muted);letter-spacing:.6px}
 .sequence-nav strong{font:normal 19px/1.5 Georgia,serif}
 .sequence-nav:last-child{margin-top:35px;margin-bottom:0;border-top:1px solid var(--line);border-bottom:0}
+
+.message{position:relative;scroll-margin-top:24px}.message-anchor{position:absolute;top:0;left:0;scroll-margin-top:24px}
+.message-main{padding-right:35px}.message-permalink{position:absolute;right:0;top:10px;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;font-size:13px;font-weight:400;text-decoration:none;opacity:.65}
+.message h3 .message-permalink{opacity:.65;font-size:13px;padding:0}.message-permalink:hover,.message h3 .message-permalink:focus-visible{opacity:1}
+.message.grouped .message-permalink{top:0}.message:target{background:var(--soft);outline:2px solid var(--gold);outline-offset:7px;border-radius:5px}
+@media(max-width:740px){.message-main{padding-right:27px}.message-permalink{right:-6px;top:5px}}

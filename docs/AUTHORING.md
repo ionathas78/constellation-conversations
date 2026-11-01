@@ -105,3 +105,9 @@ Progress is stored locally under publication ID plus story version. Increase `st
 ## Reading order between publications
 
 Set optional `previous` and `next` fields to stable publication IDs. The build rejects self-links and links to missing or unpublished conversations. A `previous` link appears above the dialogue, and a `next` link appears at its end. Both are ordinary static links. Set both publications' fields to connect them in both directions. For example, A Celebration of Aspiration and Grandeur has `next: "logos-loves-learning"`, and Logos has `previous: "a-celebration-of-aspiration-and-grandeur"`.
+
+## Permanent message links
+
+Every message has a canonical UUID fragment, for example `/conversations/logos-loves-learning/#xxxxxxxx-xxxx-5xxx-xxxx-xxxxxxxxxxxx`. Tap the `#` link beside any message to jump to it; copy its link (long-press on mobile) to share it. Grouped messages each retain their own link. The linked message is highlighted without JavaScript. Existing author IDs such as `#message-01` and `#welcome` remain working aliases.
+
+Run `npm run ids` after adding messages to store their stable `uuid` fields in content. This command fills only missing UUIDs and never replaces existing ones. If a UUID has not yet been stored, the build derives a deterministic UUIDv5 from the publication ID and message ID, so ordinary builds and reordering cannot change the link. Storing it makes the identity independent of later author-ID edits. Optional explicit UUIDs must be valid lowercase UUIDs and globally unique. Keep both `uuid` and the old `id` unchanged when editing text or moving a turn in the conversation. Do not reuse a UUID for a different message; moving it to another publication still changes the URL path.
