@@ -1,0 +1,5 @@
+import {rollDice} from './dice.js';
+import {$,stored,save} from './ui-utils.js';
+export function describeRoll(result){return `${result.expression} → ${result.total}. `+result.terms.map(t=>`${t.expression}: ${t.dice.map(d=>`${d.kept?'':'dropped '}${d.value}${d.history.length>1?' ['+d.history.join(' → ')+']':''}`).join(', ')}${t.successes?' successes':''} = ${t.value}`).join('; ');}
+for(const widget of document.querySelectorAll('.dice-widget')){const button=$('[data-roll]',widget),out=$('output',widget);button.hidden=false;out.textContent='Ready when you are.';button.addEventListener('click',()=>{try{const result=rollDice(widget.dataset.expression);out.textContent=describeRoll(result);}catch(e){out.textContent=e.message;}});}
+for(const form of document.querySelectorAll('[data-dice-form]')){const out=$('output',form);$('button',form).hidden=false;out.textContent='Ready when you are.';form.addEventListener('submit',e=>{e.preventDefault();try{out.textContent=describeRoll(rollDice($('input',form).value));}catch(error){out.textContent=error.message;}});}

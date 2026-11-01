@@ -1,0 +1,3 @@
+import {$,stored,save} from './ui-utils.js';
+const theme=$('.theme-toggle');
+if(theme){const preference=stored('constellation:theme');if(['light','dark'].includes(preference))document.documentElement.dataset.theme=preference;theme.hidden=false;theme.addEventListener('click',()=>{const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;const next=dark?'light':'dark';document.documentElement.dataset.theme=next;save('constellation:theme',next);theme.setAttribute('aria-label',`Switch to ${dark?'dark':'light'} theme`);});}

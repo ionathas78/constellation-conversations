@@ -1,0 +1,7 @@
+{
+  "spark": {
+    "src": "/assets/spark.gif",
+    "static": "/assets/spark.svg",
+    "alt": "A small golden star"
+  }
+}

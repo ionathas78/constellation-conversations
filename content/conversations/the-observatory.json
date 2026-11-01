@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "id": "the-observatory",
+  "title": "The Observatory",
+  "description": "A small field guide to everything a conversation can become.",
+  "date": "2026-11-01",
+  "published": true,
+  "demo": true,
+  "tags": [
+    "Feature tour",
+    "Interactive fiction"
+  ],
+  "cover": "/assets/observatory.svg",
+  "participants": [
+    "guide",
+    "jonathan"
+  ],
+  "editorial": "Original demonstration content, not a historical transcript. Explore the reading tools, then take a short detour into an optional interactive story.",
+  "messages": [
+    {
+      "id": "welcome",
+      "speaker": "guide",
+      "body": "Welcome to the observatory. Leave a little room for wonder.\n\nA conversation can be **only words**, and still be a whole world. Or it can open a door.\n\n> Maximum capability, minimum intrusion.",
+      "reactions": [
+        {
+          "emoji": "✨",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "reply",
+      "speaker": "jonathan",
+      "body": "And occasionally that door needs a good dice roll."
+    },
+    {
+      "id": "emoji",
+      "speaker": "guide",
+      "body": "✨ 🌙"
+    },
+    {
+      "id": "format",
+      "speaker": "guide",
+      "body": "### A few things in our pockets\n\n- *Emphasis*, **conviction**, and [a useful link](https://en.wikipedia.org/wiki/Observatory).\n- A table for keeping our thoughts in order.\n- Code, when the words need to be precise.\n\n| Instrument | Purpose |\n| --- | --- |\n| Telescope | Look farther |\n| Notebook | Look again |\n\n```js\nconst wonder = questions.length > 0;\n```\n\nThe expected value of a fair die is $E[X] = \\frac{n+1}{2}$.\n\nAnd a little custom starlight: :spark:",
+      "effect": "glow"
+    },
+    {
+      "id": "view",
+      "speaker": "guide",
+      "body": "The hill is quiet tonight. Open the illustration to see the whole sky.",
+      "attachments": [
+        {
+          "type": "image",
+          "src": "/assets/observatory.svg",
+          "alt": "A brass-domed observatory among dark hills under a starry blue sky.",
+          "caption": "A quiet place for a lively question."
+        },
+        {
+          "type": "image",
+          "src": "/assets/spark.svg",
+          "alt": "An angular golden star.",
+          "caption": "The smallest constellation."
+        }
+      ]
+    },
+    {
+      "id": "dice",
+      "speaker": "jonathan",
+      "body": "Let's see what the evening has in store.",
+      "dice": "2d20kh1+3"
+    },
+    {
+      "id": "sticker",
+      "speaker": "guide",
+      "body": "One for the road.",
+      "sticker": "spark"
+    },
+    {
+      "id": "media",
+      "speaker": "guide",
+      "body": "A tiny bell, a turning sky. These local samples need no outside service.",
+      "attachments": [
+        {
+          "type": "audio",
+          "src": "/assets/observatory-chime.wav",
+          "caption": "A single observatory bell.",
+          "transcript": "One soft, high bell tone rings and fades into silence."
+        },
+        {
+          "type": "video",
+          "src": "/assets/observatory-sky.mp4",
+          "poster": "/assets/observatory.svg",
+          "caption": "A three-second quiet view. No sound.",
+          "transcript": "The observatory illustration gently fades in and holds. No dialogue or sound.",
+          "captions": "/assets/observatory.vtt"
+        }
+      ]
+    },
+    {
+      "id": "links",
+      "speaker": "guide",
+      "body": "Bring your own soundtrack, or follow the trail into the archive.",
+      "attachments": [
+        {
+          "type": "embed",
+          "src": "https://www.youtube-nocookie.com/embed/21X5lGlDOfg",
+          "url": "https://www.youtube.com/watch?v=21X5lGlDOfg",
+          "title": "NASA live — external media"
+        },
+        {
+          "type": "link",
+          "url": "https://science.nasa.gov/universe/",
+          "title": "A universe of questions",
+          "description": "NASA's guide to the universe. This preview is supplied by the editor at build time."
+        },
+        {
+          "type": "download",
+          "src": "/assets/field-notes.txt",
+          "title": "Download the field notes"
+        }
+      ]
+    }
+  ],
+  "story": {
+    "version": 1,
+    "start": "door",
+    "nodes": {
+      "door": {
+        "body": "A brass door stands beneath the telescope. How will you approach?",
+        "actions": [
+          {
+            "label": "Knock and introduce yourself",
+            "to": "greeting",
+            "set": {
+              "courtesy": 1
+            }
+          },
+          {
+            "label": "Try the old lock · 1d20+2 ≥ 12",
+            "roll": "1d20+2",
+            "target": 12,
+            "pass": "stars",
+            "fail": "locked"
+          }
+        ]
+      },
+      "greeting": {
+        "body": "A warm voice answers. ‘A question is always welcome here.’",
+        "actions": [
+          {
+            "label": "Ask to see the stars",
+            "to": "stars",
+            "when": {
+              "variable": "courtesy",
+              "op": "=",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "locked": {
+        "body": "The lock holds. From inside, someone clears their throat. There is still time for manners.",
+        "actions": [
+          {
+            "label": "Knock instead",
+            "to": "greeting",
+            "set": {
+              "courtesy": 1
+            }
+          }
+        ]
+      },
+      "stars": {
+        "body": "The dome opens. Above you, the sky has kept every one of its promises.\n\n**End of this small journey.** Try another path whenever you like.",
+        "actions": []
+      }
+    }
+  }
+}

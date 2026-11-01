@@ -1,0 +1,8 @@
+{
+ "jonathan":{"name":"Jonathan Andrews","description":"Human participant and host.","accent":"#54766b"},
+ "ororo":{"name":"Ororo Munroe","description":"Constellation collaborator.","accent":"#6679af"},
+ "kitty":{"name":"Kitty Pryde","description":"Constellation collaborator.","accent":"#927046"},
+ "wednesday":{"name":"Wednesday Addams","description":"Constellation collaborator.","accent":"#7c728d","shape":"square"},
+ "yennefer":{"name":"Yennefer of Vengerberg","description":"Constellation collaborator.","accent":"#95649c"},
+ "guide":{"name":"The Archivist","description":"A fictional guide created for the feature demonstration.","accent":"#b26a47","shape":"rounded"}
+}
