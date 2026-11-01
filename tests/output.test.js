@@ -8,7 +8,7 @@ test('production output has safe assets and progressive content',async()=>{
  execFileSync(process.execPath,['src/build.mjs'],{env:{...process.env,BASE_PATH:''}});
  const home=await fs.readFile('dist/index.html','utf8');assert.ok(home.includes('The collection'));assert.ok(!home.includes('http-equiv="refresh"'));
  const html=await fs.readFile('dist/conversations/the-observatory/index.html','utf8');
- for(const marker of ['<main','aria-label="Published conversation"','<audio controls','<video controls','<track kind="captions"','data-story=','Read every passage','sandbox','katex','data-dice-form'])if(marker!=='sandbox')assert.ok(html.includes(marker),marker);
+ for(const marker of ['<main','aria-label="Published conversation"','<audio controls','<video controls','<track kind="captions"','data-story=','Read every passage','katex','data-dice-form'])assert.ok(html.includes(marker),marker);
  assert.ok(!html.includes('<iframe')); // provider is click-to-load
  const logos=await fs.readFile('dist/conversations/logos-loves-learning/index.html','utf8');assert.ok(logos.includes('Transcript awaiting source'));assert.ok(!logos.includes('class="dice-widget"'));
  for(const doc of [home,html,logos])for(const match of doc.matchAll(/(?:src|href)="(\/(?!\/)[^"#]*)"/g)){
