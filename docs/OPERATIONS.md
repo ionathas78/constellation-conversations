@@ -26,6 +26,6 @@ The page follows system color preference until a manual light/dark choice is sav
 
 Manual checks before release: inspect the library, a text conversation and the rich demo on desktop/mobile; use keyboard navigation, image dialog, dice controls, story choice/roll/back/restart, theme switching, native media and blocked embed fallback. Native assistive technology and real-device testing remain useful; automated checks are not a certification of universal accessibility.
 
-## Current editorial limitation
+## Source transcript
 
-The original five exchanges for **Logos Loves Learning** were not accessible in full during implementation. The reserved publication includes a transparent editorial notice and speaker placeholders. Replace its empty `messages` with the exact original dialogue and set `status` to `complete` after source review. Preserve wording, sequence, speakers and meaningful formatting. The demonstration text must never be mistaken for that transcript.
+The human participant supplied the final five exchanges for **Logos Loves Learning** after the initial implementation. The publication now includes those exchanges with their wording, sequence, speaker attribution and paragraph structure preserved, including the conversational correction from Philippians 4 to Philippians 2. No theological wording or spelling has been silently corrected. Portraits remain initials until actual assets are supplied.

@@ -17,3 +17,7 @@
 - The exact final five exchanges for Logos Loves Learning were not retrievable; the page holds an explicit notice and no fabricated transcript. Actual portraits are also pending; initials are intentional placeholders.
 - External iframe playback depends on provider permissions, availability and client network. A working provider fallback link is always present. Local audio/video assets and markup are verified, but playback was not audited across devices/codecs.
 - Native screen reader behavior, real iOS/Android devices, system reduced-motion emulation, and forced storage failures were not directly exercised. Their semantic/fallback paths are implemented; no accessibility certification is claimed.
+
+## Source supplied after implementation
+
+The human participant supplied the complete final five exchanges. Imported as 34 attributed speaker turns with original wording and paragraph structure. The publication is now marked complete; the earlier retrieval limitation is resolved. Portrait assets and Pages activation remain separate pending items.

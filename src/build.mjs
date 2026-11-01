@@ -18,7 +18,7 @@ export function safeURL(value,{local=false}={}){
  if(!local){let u;try{u=new URL(value);}catch{throw Error('Invalid URL');}if(u.protocol==='https:'&&!u.username&&!u.password)return u.href;}
  throw Error('Use a safe site-relative path or HTTPS URL.');
 }
-const md=new MarkdownIt({html:false,linkify:true,typographer:false,highlight:(s,lang)=>lang&&hljs.getLanguage(lang)?hljs.highlight(s,{language:lang,ignoreIllegals:true}).value:escape(s)});
+const md=new MarkdownIt({html:false,linkify:true,typographer:false,breaks:true,highlight:(s,lang)=>lang&&hljs.getLanguage(lang)?hljs.highlight(s,{language:lang,ignoreIllegals:true}).value:escape(s)});
 const defaultImage=md.renderer.rules.image;
 md.renderer.rules.image=(tokens,i,options,env,self)=>{tokens[i].attrSet('src',safeURL(tokens[i].attrGet('src')));tokens[i].attrSet('loading','lazy');const img=defaultImage(tokens,i,options,env,self);const linked=tokens.slice(0,i).reduce((level,t)=>level+(t.type==='link_open'?1:t.type==='link_close'?-1:0),0)>0;return linked?img:`<a data-fullsize href="${escape(tokens[i].attrGet('src'))}">${img}</a>`;};
 const linkOpen=md.renderer.rules.link_open||((tokens,i,options,env,self)=>self.renderToken(tokens,i,options));

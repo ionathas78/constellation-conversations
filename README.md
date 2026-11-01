@@ -41,7 +41,7 @@ In repository **Settings → Pages → Build and deployment → Source**, select
 
 ## Publication integrity
 
-**Logos Loves Learning is awaiting its original final five exchanges.** Retrieval found references and fragments, not the complete source. Its page deliberately contains an editorial notice and no reconstructed dialogue. The Observatory is clearly labeled original demonstration content. Do not replace historical transcripts with interactive adaptations; use the separate `story` field.
+**Logos Loves Learning contains the final five exchanges supplied by the human participant.** Original wording, sequence, speaker attribution, paragraphs and conversational corrections are retained. Initials remain as portrait placeholders. The Observatory is clearly labeled original demonstration content. Do not replace historical transcripts with interactive adaptations; use the separate `story` field.
 
 ## Dependencies
 
