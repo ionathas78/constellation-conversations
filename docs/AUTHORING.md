@@ -29,6 +29,7 @@ Speaker IDs must exist in `content/speakers.json` and in the publication's `part
 {
   "reader": {
     "name": "A Reader",
+    "role": "human",
     "description": "A short profile for future profile panels.",
     "accent": "#54766b",
     "shape": "circle",
@@ -38,7 +39,7 @@ Speaker IDs must exist in `content/speakers.json` and in the publication's `part
 }
 ```
 
-`name` is required; other fields are optional. Shapes: `circle` (default), `square`, `rounded`. Initials remain beneath the portrait and reappear if the image fails. Use high-resolution images (at least 128 × 128) for crisp portraits. For GIF, WebP, or APNG portraits supply `avatarStatic`; the build conservatively requires one for those extensions, including static WebP. Publication-specific avatars use the speaker's static fallback; use static publication overrides unless the registry fallback represents them accurately. Portraits are decorative beside a text attribution.
+`name` is required; other fields are optional. Set `role: "human"` for a human participant to render their messages on the right with a subtle tinted panel, a right-side avatar, and a Human label. Other speakers keep the standard conversation layout. Text always stays left-aligned for readability. Shapes: `circle` (default), `square`, `rounded`. Initials remain beneath the portrait and reappear if the image fails. Use high-resolution images (at least 128 × 128) for crisp portraits. For GIF, WebP, or APNG portraits supply `avatarStatic`; the build conservatively requires one for those extensions, including static WebP. Publication-specific avatars use the speaker's static fallback; use static publication overrides unless the registry fallback represents them accurately. Portraits are decorative beside a text attribution.
 
 ## Markdown and mathematics
 

@@ -2,7 +2,8 @@
   "jonathan": {
     "name": "Jonathan Andrews",
     "description": "Human participant and host.",
-    "accent": "#54766b"
+    "accent": "#54766b",
+    "role": "human"
   },
   "ororo": {
     "name": "Ororo Munroe",

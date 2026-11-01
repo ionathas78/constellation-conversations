@@ -22,3 +22,12 @@
 .message h3 .message-permalink{opacity:.65;font-size:13px;padding:0}.message-permalink:hover,.message h3 .message-permalink:focus-visible{opacity:1}
 .message.grouped .message-permalink{top:0}.message:target{background:var(--soft);outline:2px solid var(--gold);outline-offset:7px;border-radius:5px}
 @media(max-width:740px){.message-main{padding-right:27px}.message-permalink{right:-6px;top:5px}}
+
+/* Human prompts sit across the room, while their prose keeps its reading edge. */
+.human-message{grid-template-columns:minmax(0,1fr) 42px;margin:20px 0 20px clamp(24px,6%,54px);padding:20px;background:color-mix(in srgb,var(--accent) 9%,var(--surface));border:1px solid var(--line);border-radius:13px 13px 3px 13px;gap:16px}
+.human-message .avatar-slot{grid-column:2;grid-row:1}.human-message .message-main{grid-column:1;grid-row:1;min-width:0;padding-right:16px}
+.human-message .message-permalink{top:9px;right:67px}.human-message.grouped{margin-top:-9px;padding-top:15px}.human-message.grouped .message-permalink{top:4px}
+.speaker-role{display:inline-block;margin-left:7px;color:var(--muted);font-size:9px;font-weight:500;letter-spacing:.6px;text-transform:uppercase}
+.human-message:target{background:color-mix(in srgb,var(--accent) 13%,var(--surface))}
+@media(max-width:740px){.human-message{grid-template-columns:minmax(0,1fr) 32px;gap:10px;padding:14px;margin-left:18px}.human-message .message-main{padding-right:0}.human-message .message-permalink{right:4px;top:48px}.human-message h3{padding-right:0;line-height:1.7}.human-message .message-body{padding-right:13px}.speaker-role{font-size:8px;margin-left:5px}.human-message.grouped .message-permalink{top:2px}}
+@media print{.human-message{background:transparent;border-color:#bbb;break-inside:auto}}
