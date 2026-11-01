@@ -10,7 +10,9 @@ test('production output has safe assets and progressive content',async()=>{
  const html=await fs.readFile('dist/conversations/the-observatory/index.html','utf8');
  for(const marker of ['<main','aria-label="Published conversation"','<audio controls','<video controls','<track kind="captions"','data-story=','Read every passage','katex','data-dice-form'])assert.ok(html.includes(marker),marker);
  assert.ok(!html.includes('<iframe')); // provider is click-to-load
- const logos=await fs.readFile('dist/conversations/logos-loves-learning/index.html','utf8');assert.ok(logos.includes('Mmm. The Bible App'));assert.ok(logos.includes('Hm. Logos loves learning. That tracks.'));assert.ok(!logos.includes('Transcript awaiting source'));assert.ok(!logos.includes('class="dice-widget"'));
+ const logos=await fs.readFile('dist/conversations/logos-loves-learning/index.html','utf8');assert.ok(logos.includes('Mmm. The Bible App'));assert.ok(logos.includes('Hm. Logos loves learning. That tracks.'));assert.ok(!logos.includes('Transcript awaiting source'));assert.ok(!logos.includes('class="dice-widget"'));assert.ok(logos.includes('rel="prev"'));
+ const earlier=await fs.readFile('dist/conversations/a-celebration-of-aspiration-and-grandeur/index.html','utf8');assert.ok(earlier.includes('Penny Escher'));assert.ok(earlier.includes('Selah. 🌿'));assert.ok(earlier.includes('rel="next"'));
+
  for(const doc of [home,html,logos])for(const match of doc.matchAll(/(?:src|href)="(\/(?!\/)[^"#]*)"/g)){
   const target=path.join(root,'dist',match[1]);await fs.access(target);
  }

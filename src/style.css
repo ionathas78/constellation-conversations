@@ -9,3 +9,10 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media print{.app-shell{display:block}.app-shell>aside,.topbar,.site-footer,.back-link,button,.story-tools{display:none!important}.reading-column{max-width:none;padding:0}.message{break-inside:avoid}body{background:white;color:black}.editorial-note{color:#333}}
 .dice-lab{border-top:1px solid var(--line);margin-top:26px;padding:20px 0;font-size:13px}.dice-lab summary{padding:10px 0;cursor:pointer;color:var(--text)}.dice-lab form{padding-top:15px}.dice-lab label{display:block;margin-bottom:8px;font-size:12px}.dice-input-row{display:flex;gap:10px}.dice-input-row input{font:14px ui-monospace,monospace;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:10px;min-width:0;flex:1;width:100%}.dice-input-row button{font-size:12px}.effect-glow{background:linear-gradient(90deg,transparent,var(--soft));padding-right:12px}.avatar picture{position:absolute;inset:0}
+
+.nav-item[aria-current="page"]{background:var(--soft);color:var(--text)}
+.sequence-nav{height:auto;padding:19px 0;display:block;border-bottom:1px solid var(--line);margin-bottom:20px}
+.sequence-nav a{display:flex;flex-direction:column;gap:5px;text-decoration:none;min-height:44px;justify-content:center}
+.sequence-nav span{font-size:10px;color:var(--muted);letter-spacing:.6px}
+.sequence-nav strong{font:normal 19px/1.5 Georgia,serif}
+.sequence-nav:last-child{margin-top:35px;margin-bottom:0;border-top:1px solid var(--line);border-bottom:0}
