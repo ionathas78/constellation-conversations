@@ -1,5 +1,5 @@
 import {rollDice} from './dice.js';
-import {initialState,transition,restoreState,condition} from './branch.js';
+import {initialState,transition,restoreState,condition,resolveStoryText} from './branch.js';
 import {describeRoll} from './dice-ui.js';
 import {newSessionUUID} from './feedback-state.js';
 import {getReaderMarkdown} from './reader-markdown.js';
@@ -13,6 +13,7 @@ for(const container of document.querySelectorAll('[data-story]')){
  let state=restoreState(story,parsed),renderer;const drafts=new Map(),view=$('[data-story-view]',container),output=$('[data-story-roll]',container),status=$('[data-storage-status]',container);
  async function ready(){if(!renderer)renderer=await getReaderMarkdown(emoji);return renderer;}
  function advance(index,roll,submission){state=transition(story,state,index,roll?.total,submission);output.textContent=roll?describeRoll(roll):'';status.textContent=persist()?(tabSession?'Progress saved in this tab’s session.':'Progress saved on this device.'):'Storage unavailable. Your story continues for this visit.';render(true);}
+ function fillReferences(element){const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT);let node;while((node=walker.nextNode()))if(node.nodeValue.includes('{{'))node.nodeValue=resolveStoryText(node.nodeValue,state);}
  function render(focus=false){
   const node=story.nodes[state.node];view.replaceChildren();
   for(const step of state.history){if(!step.input)continue;const response=step.input,article=document.createElement('article');article.className='message human-message story-response';article.id=response.uuid;article.dataset.thread=response.threadUUID;
@@ -20,10 +21,12 @@ for(const container of document.querySelectorAll('[data-story]')){
    if(renderer){try{body.innerHTML=renderer.render(response.body);}catch{body.textContent=response.body;body.classList.add('feedback-plain');}}else{body.textContent=response.body;body.classList.add('feedback-plain');}
    main.append(body);const avatar=document.createElement('div');avatar.className='avatar-slot';const initials=document.createElement('span');initials.className='avatar';initials.textContent='You';initials.setAttribute('aria-hidden','true');avatar.append(initials);article.append(avatar,main);view.append(article);
   }
-  const text=document.createElement('div');text.className='story-passage';text.tabIndex=-1;text.innerHTML=node.html;view.append(text);
+  const text=document.createElement('div');text.className='story-passage';text.tabIndex=-1;text.innerHTML=node.html;fillReferences(text);
+  for(const fragment of node.fragments||[]){if(!condition(fragment.when,state.variables,state))continue;const part=document.createElement('div');part.className='story-fragment';part.innerHTML=fragment.html;fillReferences(part);text.append(part);}
+  view.append(text);
   const actions=document.createElement('div');actions.className='story-actions';
   node.actions.forEach((action,index)=>{
-   if(!condition(action.when,state.variables))return;
+   if(!condition(action.when,state.variables,state))return;
    if(action.input){
     const form=document.createElement('form');form.className='story-input';const label=document.createElement('label'),input=document.createElement('textarea'),preview=document.createElement('div'),previewButton=document.createElement('button'),submit=document.createElement('button'),controls=document.createElement('div');
     input.id=`story-input-${container.dataset.storage.replace(/[^a-z0-9_-]/gi,'-')}-${index}`;input.name='body';input.rows=4;input.required=true;input.maxLength=action.input.maxLength??2000;input.placeholder=action.input.placeholder||'Markdown is welcome.';input.value=drafts.get(`${state.node}:${index}`)||'';label.htmlFor=input.id;label.textContent=action.input.label;

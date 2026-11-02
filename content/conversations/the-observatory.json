@@ -131,7 +131,7 @@
     }
   ],
   "story": {
-    "version": 2,
+    "version": 3,
     "start": "door",
     "nodes": {
       "door": {
@@ -150,6 +150,10 @@
             "target": 12,
             "pass": "stars",
             "fail": "locked"
+          },
+          {
+            "label": "Take the bridgekeeper’s challenge",
+            "to": "swallowQuestion"
           }
         ]
       },
@@ -212,6 +216,83 @@
           {
             "label": "Look through the telescope",
             "to": "stars"
+          }
+        ]
+      },
+      "swallowQuestion": {
+        "body": "A bridgekeeper blocks a very small bridge.\n\n**What… is the air speed velocity of a laden swallow?**",
+        "actions": [
+          {
+            "label": "Answer the bridgekeeper",
+            "input": {
+              "variable": "swallow_answer",
+              "tag": "swallow_answer",
+              "label": "Your answer",
+              "placeholder": "An African or European swallow?",
+              "maxLength": 1000,
+              "defaultOutcome": "offered_answer"
+            },
+            "to": "swallowCrossing",
+            "routes": [
+              {
+                "when": {
+                  "response": "swallow_answer",
+                  "op": "contains",
+                  "value": "african",
+                  "ignoreCase": true
+                },
+                "to": "swallowClarification",
+                "outcome": "questioned_the_premise"
+              },
+              {
+                "when": {
+                  "response": "swallow_answer",
+                  "op": "contains",
+                  "value": "don't know",
+                  "ignoreCase": true
+                },
+                "to": "swallowLibrary",
+                "outcome": "admitted_uncertainty"
+              }
+            ]
+          }
+        ]
+      },
+      "swallowClarification": {
+        "body": "You answered: “{{responses.swallow_answer.body}}”\n\nThe bridgekeeper pauses. “I hadn’t considered the species.”",
+        "fragments": [
+          {
+            "when": {
+              "response": "swallow_answer",
+              "field": "outcome",
+              "op": "=",
+              "value": "questioned_the_premise"
+            },
+            "body": "**A sharper question has changed the outcome.** The bridge is yours."
+          }
+        ],
+        "actions": [
+          {
+            "label": "Cross and return to the observatory",
+            "to": "greeting"
+          }
+        ]
+      },
+      "swallowCrossing": {
+        "body": "Your answer—“{{responses.swallow_answer.body}}”—is entered in the ledger.\n\nThe bridgekeeper steps aside.",
+        "actions": [
+          {
+            "label": "Cross and return to the observatory",
+            "to": "greeting"
+          }
+        ]
+      },
+      "swallowLibrary": {
+        "body": "“{{responses.swallow_answer.body}}”\n\nThe bridgekeeper points you toward the library. There is no shame in an unanswered question.",
+        "actions": [
+          {
+            "label": "Return to the observatory",
+            "to": "greeting"
           }
         ]
       }

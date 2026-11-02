@@ -251,38 +251,7 @@
                       }
                     },
                     "when": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "variable",
-                        "op",
-                        "value"
-                      ],
-                      "properties": {
-                        "variable": {
-                          "type": "string"
-                        },
-                        "op": {
-                          "enum": [
-                            ">",
-                            ">=",
-                            "<",
-                            "<=",
-                            "="
-                          ]
-                        },
-                        "value": {
-                          "anyOf": [
-                            {
-                              "type": "number"
-                            },
-                            {
-                              "type": "string",
-                              "maxLength": 2000
-                            }
-                          ]
-                        }
-                      }
+                      "$ref": "#/definitions/storyCondition"
                     },
                     "input": {
                       "type": "object",
@@ -307,8 +276,60 @@
                           "type": "integer",
                           "minimum": 1,
                           "maximum": 2000
+                        },
+                        "tag": {
+                          "type": "string",
+                          "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,39}$"
+                        },
+                        "defaultOutcome": {
+                          "type": "string",
+                          "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,39}$"
                         }
                       }
+                    },
+                    "routes": {
+                      "type": "array",
+                      "maxItems": 30,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "when",
+                          "to"
+                        ],
+                        "properties": {
+                          "when": {
+                            "$ref": "#/definitions/storyCondition"
+                          },
+                          "to": {
+                            "type": "string"
+                          },
+                          "outcome": {
+                            "type": "string",
+                            "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,39}$"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "fragments": {
+                "type": "array",
+                "maxItems": 30,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "when",
+                    "body"
+                  ],
+                  "properties": {
+                    "when": {
+                      "$ref": "#/definitions/storyCondition"
+                    },
+                    "body": {
+                      "type": "string"
                     }
                   }
                 }
@@ -328,6 +349,73 @@
     },
     "feedback": {
       "type": "boolean"
+    }
+  },
+  "definitions": {
+    "storyCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "value"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "variable"
+          ]
+        },
+        {
+          "required": [
+            "response"
+          ]
+        }
+      ],
+      "properties": {
+        "variable": {
+          "type": "string"
+        },
+        "response": {
+          "type": "string"
+        },
+        "field": {
+          "enum": [
+            "body",
+            "uuid",
+            "threadUUID",
+            "replyTo",
+            "tag",
+            "outcome"
+          ]
+        },
+        "op": {
+          "enum": [
+            ">",
+            ">=",
+            "<",
+            "<=",
+            "=",
+            "!=",
+            "contains",
+            "startsWith",
+            "endsWith"
+          ]
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string",
+              "maxLength": 2000
+            }
+          ]
+        },
+        "ignoreCase": {
+          "type": "boolean"
+        }
+      }
     }
   }
 }

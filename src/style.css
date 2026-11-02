@@ -39,3 +39,4 @@
 .story .story-input .feedback-actions button{background:var(--surface);color:var(--text);border-color:var(--line)}.story .story-input .feedback-actions button[type=submit]{background:var(--accent);color:var(--bg)}
 .story-response.human-message{margin-left:0;margin-top:0;margin-bottom:24px}.story-response .message-body{white-space:normal}.story-response .message-body.feedback-plain{white-space:pre-wrap}
 @media(max-width:740px){.story-input{padding:13px}}
+.story-passage{overflow-wrap:anywhere;min-width:0}
