@@ -29,3 +29,7 @@ Manual checks before release: inspect the library, a text conversation and the r
 ## Source transcript
 
 The human participant supplied the final five exchanges for **Logos Loves Learning** after the initial implementation. The publication now includes those exchanges with their wording, sequence, speaker attribution and paragraph structure preserved, including the conversational correction from Philippians 4 to Philippians 2. No theological wording or spelling has been silently corrected. Portraits remain initials until actual assets are supplied.
+
+## Session feedback runtime
+
+The optional local composer is the deliberate exception to build-time-only rendering: safe arbitrary Markdown input requires the same audited renderer in the browser. Local vendored Markdown-it and KaTeX load on demand. HTML is disabled, math trust is disabled, URLs are checked, saved records are validated and bounded, and parsed metadata is inserted as text. Feedback never modifies the static transcript or sends prompts to a server. The app entry and stylesheet have content-based filenames to avoid stale assets during deployments.
