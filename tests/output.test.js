@@ -11,8 +11,8 @@ test('production output has safe assets and progressive content',async()=>{
  for(const marker of ['<main','aria-label="Published conversation"','<audio controls','<video controls','<track kind="captions"','data-story=','Read every passage','katex','data-dice-form'])assert.ok(html.includes(marker),marker);
  const demo=JSON.parse(await fs.readFile('content/conversations/the-observatory.json','utf8'));
  for(const message of demo.messages){assert.ok(html.includes(`id="${message.uuid}"`));assert.ok(html.includes(`href="#${message.uuid}"`));assert.ok(html.includes(`id="${message.id}"`));}
- assert.ok(!html.includes('<iframe')); // provider is click-to-load
- const logos=await fs.readFile('dist/conversations/logos-loves-learning/index.html','utf8');assert.ok(logos.includes('Mmm. The Bible App'));assert.ok(logos.includes('Hm. Logos loves learning. That tracks.'));assert.ok(!logos.includes('Transcript awaiting source'));assert.ok(!logos.includes('class="dice-widget"'));assert.ok(logos.includes('rel="prev"'));
+ assert.ok(html.includes('Your question for the observatory'));assert.ok(!html.includes('data-feedback-reply'));assert.ok(!html.includes('<iframe')); // provider is click-to-load
+ const logos=await fs.readFile('dist/conversations/logos-loves-learning/index.html','utf8');assert.ok(logos.includes('Mmm. The Bible App'));assert.ok(logos.includes('Hm. Logos loves learning. That tracks.'));assert.ok(!logos.includes('Transcript awaiting source'));assert.ok(!logos.includes('class="dice-widget"'));assert.ok(!logos.includes('data-feedback-reply'));assert.ok(!logos.includes('Add a thought')); assert.ok(logos.includes('rel="prev"'));
  const earlier=await fs.readFile('dist/conversations/a-celebration-of-aspiration-and-grandeur/index.html','utf8');assert.ok(earlier.includes('Penny Escher'));assert.ok(earlier.includes('Selah. 🌿'));assert.ok(earlier.includes('rel="next"'));
 
  for(const doc of [home,html,logos])for(const match of doc.matchAll(/(?:src|href)="(\/(?!\/)[^"#]*)"/g)){

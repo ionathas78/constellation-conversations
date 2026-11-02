@@ -131,7 +131,7 @@
     }
   ],
   "story": {
-    "version": 1,
+    "version": 2,
     "start": "door",
     "nodes": {
       "door": {
@@ -164,6 +164,10 @@
               "op": "=",
               "value": 1
             }
+          },
+          {
+            "label": "Leave a question in the notebook",
+            "to": "notebook"
           }
         ]
       },
@@ -182,8 +186,35 @@
       "stars": {
         "body": "The dome opens. Above you, the sky has kept every one of its promises.\n\n**End of this small journey.** Try another path whenever you like.",
         "actions": []
+      },
+      "notebook": {
+        "body": "The archivist opens a notebook. **What question would you bring to the stars?** Write it below, or continue without leaving a question.",
+        "actions": [
+          {
+            "label": "Leave my question",
+            "input": {
+              "variable": "question",
+              "label": "Your question for the observatory",
+              "placeholder": "Write a question. Markdown is welcome.",
+              "maxLength": 2000
+            },
+            "to": "recorded"
+          },
+          {
+            "label": "Keep my question to myself",
+            "to": "stars"
+          }
+        ]
+      },
+      "recorded": {
+        "body": "Your question has a place in the notebook. Its answer belongs to another evening.\n\nFor now, the dome is opening.",
+        "actions": [
+          {
+            "label": "Look through the telescope",
+            "to": "stars"
+          }
+        ]
       }
     }
-  },
-  "feedback": true
+  }
 }

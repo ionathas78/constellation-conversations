@@ -239,7 +239,15 @@
                     "set": {
                       "type": "object",
                       "additionalProperties": {
-                        "type": "number"
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string",
+                            "maxLength": 2000
+                          }
+                        ]
                       }
                     },
                     "when": {
@@ -264,7 +272,41 @@
                           ]
                         },
                         "value": {
-                          "type": "number"
+                          "anyOf": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "string",
+                              "maxLength": 2000
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "input": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "variable",
+                        "label"
+                      ],
+                      "properties": {
+                        "variable": {
+                          "type": "string",
+                          "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,39}$"
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "placeholder": {
+                          "type": "string"
+                        },
+                        "maxLength": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 2000
                         }
                       }
                     }

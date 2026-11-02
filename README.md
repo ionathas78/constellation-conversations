@@ -12,7 +12,7 @@ npm test
 npm run build
 ```
 
-The portable site is in `dist/`. Serve that directory with any static web server. No CDN, accounts, backend, or API keys are needed. Optional local feedback uses vendored rendering tools on demand. Use `BASE_PATH=/constellation-conversations npm run build` for the project GitHub Pages URL. Leave it empty for a domain root.
+The portable site is in `dist/`. Serve that directory with any static web server. No CDN, accounts, backend, or API keys are needed. Optional authored story prompts use vendored rendering tools on demand. Use `BASE_PATH=/constellation-conversations npm run build` for the project GitHub Pages URL. Leave it empty for a domain root.
 
 ## Publish another conversation
 
@@ -45,4 +45,4 @@ In repository **Settings → Pages → Build and deployment → Source**, select
 
 ## Dependencies
 
-Markdown-it (Markdown), KaTeX (accessible static math), highlight.js (build-time code highlighting), and Ajv (schema validation) are build-time tools. Versions and transitive packages are locked. KaTeX CSS/fonts and optional local composer renderers are copied into the output; the optional session-feedback composer loads local copies of Markdown-it and KaTeX on demand. Reading and dice do not load these runtime tools. Third-party licenses are retained in `dist/assets/vendor/`.
+Markdown-it (Markdown), KaTeX (accessible static math), highlight.js (build-time code highlighting), and Ajv (schema validation) are build-time tools. Versions and transitive packages are locked. KaTeX CSS/fonts and optional local composer renderers are copied into the output; the optional story-prompt editor loads local copies of Markdown-it and KaTeX on demand. Reading and dice do not load these runtime tools. Third-party licenses are retained in `dist/assets/vendor/`.

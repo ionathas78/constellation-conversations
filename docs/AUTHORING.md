@@ -99,7 +99,7 @@ A `story` is an optional adaptation, never a replacement for message text:
 }
 ```
 
-A roll passes when its total is at least `target`. Choice actions use `to`. `set` assigns finite numeric variables. `when: {"variable":"polite","op":"=","value":1}` gates an action based on a previous choice; absent variables are zero. Operators: `=`, `<`, `<=`, `>`, `>=`. Combine sequences of gated nodes for compound conditions without per-story JavaScript. All destinations must exist. Node/variable IDs use letters followed by letters, numbers or underscores; prototype keys are forbidden.
+A roll passes when its total is at least `target`. Choice actions use `to`. `set` assigns finite numeric variables or text of at most 2,000 characters. Text conditions support exact equality (`=`); ordered comparisons remain numeric. `when: {"variable":"polite","op":"=","value":1}` gates an action based on a previous choice; absent variables are zero. Operators: `=`, `<`, `<=`, `>`, `>=`. Combine sequences of gated nodes for compound conditions without per-story JavaScript. All destinations must exist. Node/variable IDs use letters followed by letters, numbers or underscores; prototype keys are forbidden.
 
 Progress is stored locally under publication ID plus story version. Increase `story.version` when changing narrative structure to start a fresh session. Previous decision replays earlier steps and restores variables; Restart starts from the beginning. Every passage and destination also appears in a readable disclosure for no-JavaScript access. There is a 200-transition limit per session. Device-local saves and rolls are convenience features, not tamper-proof game records.
 
@@ -122,3 +122,26 @@ The serialized session is documented by `content/feedback-schema.json`; relation
 State is bounded to 100 messages, 20,000 characters per message and 250,000 total characters, and kept in `sessionStorage` under publication ID and version. It survives refreshes in the same tab; tab closure normally ends the session, subject to browser tab-restoration behavior. Storage failures allow in-memory use for the visit. Reset clears feedback and drafts while leaving dice, story progress and the published conversation alone.
 
 The shared safe Markdown renderer is used for publication and local preview/display. Local copies of pinned Markdown-it and KaTeX load only when formatting a draft or restoring saved feedback. No CDN or external AI service is involved. Raw HTML stays inert; code blocks display safely without build-time syntax colors. Explicitly authored HTTPS image/media links may contact their hosts when rendered, as in the published reader. Avoid private information in external URLs.
+
+## Text-entry actions in interactive passages
+
+A text prompt is an authored story action alongside choice or dice actions. It is not general feedback on a historical transcript. None of the supplied publications enables general feedback by default.
+
+```json
+{
+  "label": "Leave my question",
+  "input": {
+    "variable": "question",
+    "label": "Your question for the observatory",
+    "placeholder": "Write a question. Markdown is welcome.",
+    "maxLength": 2000
+  },
+  "to": "recorded"
+}
+```
+
+The editor appears only at a node declaring this action. Preview uses the same safe Markdown/math/emoji renderer as messages. Submit records a human response, assigns message/thread/reply UUIDs, writes its text to the declared variable, and advances to `to`. It does not call an AI service or invent a response. Authors declare subsequent passages and conditions. A text-input action cannot also roll dice. Its input variable is assigned after any `set` values.
+
+Responses appear above the current passage in human-message styling. Later responses in that story share a thread and reply to the preceding response. Previous decision restores an input as an editable draft and rolls back its variable; Replay produces a new response UUID. Restart removes the responses and drafts. Stories containing text-entry actions use tab-scoped `sessionStorage` for all progress and responses, surviving refresh in that tab without publishing. Other stories retain the existing device-local storage behavior. Local response UUIDs do not create publicly shareable transcript messages. Increase the story version when changing action structure.
+
+In The Observatory demonstration: Knock → Leave a question in the notebook → write or preview a question → Leave my question. The original choice and dice paths remain available.

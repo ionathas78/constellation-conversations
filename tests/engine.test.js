@@ -41,3 +41,25 @@ test('bad targets and variables are rejected',()=>{
  assert.throws(()=>validateStory({start:'a',nodes:{a:{actions:[{to:'missing'}]}}}));
  assert.throws(()=>validateStory({start:'a',nodes:{a:{actions:[{to:'a',set:{constructor:1}}]}}}));
 });
+
+const inputStory={start:'ask',nodes:{ask:{body:'A question?',actions:[{label:'Continue',input:{variable:'answer',label:'Your answer',maxLength:30},to:'answered'}]},answered:{body:'Recorded.',actions:[{label:'Stars',to:'end',when:{variable:'answer',op:'=',value:'stars'}}]},end:{body:'End',actions:[]}}};
+const response={uuid:'00112233-4455-4677-8899-aabbccddeeff',threadUUID:'10000000-0000-4000-8000-000000000000',replyTo:null,body:'stars'};
+test('text actions store responses, preserve thread identity and replay submitted input',()=>{
+ assert.ok(validateStory(inputStory));const first=initialState(inputStory),next=transition(inputStory,first,0,null,response);
+ assert.equal(next.node,'answered');assert.equal(next.variables.answer,'stars');assert.equal(next.history[0].input.uuid,response.uuid);
+ assert.deepEqual(restoreState(inputStory,next),next);assert.equal(transition(inputStory,next,0).node,'end');assert.deepEqual(initialState(inputStory).variables,{});
+ const back=restoreState(inputStory,{history:next.history.slice(0,-1)});assert.equal(back.node,'ask');assert.deepEqual(back.variables,{});
+});
+test('text input validates length, presence, identities and allowed action configuration',()=>{
+ const first=initialState(inputStory);for(const input of [undefined,{...response,body:''},{...response,body:'x'.repeat(31)},{...response,uuid:'bad'},{...response,replyTo:response.uuid}])assert.throws(()=>transition(inputStory,first,0,null,input));
+ assert.deepEqual(restoreState(inputStory,{history:[{from:'ask',action:0,input:{...response,body:''}}]}),first);
+ const bad=structuredClone(inputStory);bad.nodes.ask.actions[0].roll='1d6';assert.throws(()=>validateStory(bad));
+ const conditionStory=structuredClone(inputStory);conditionStory.nodes.answered.actions[0].when.op='>';assert.throws(()=>validateStory(conditionStory));
+});
+test('successive story inputs preserve one thread and reject broken reply chains',()=>{
+ const two=structuredClone(inputStory);two.nodes.answered.actions.push({label:'Say more',input:{variable:'more',label:'One more thought'},to:'end'});
+ const first=transition(two,initialState(two),0,null,response),reply={uuid:'20000000-0000-4000-8000-000000000000',threadUUID:response.threadUUID,replyTo:response.uuid,body:'More'};
+ const end=transition(two,first,1,null,reply);assert.equal(end.variables.more,'More');assert.equal(end.history[1].input.threadUUID,response.threadUUID);assert.deepEqual(restoreState(two,end),end);
+ assert.throws(()=>transition(two,first,1,null,{...reply,threadUUID:'30000000-0000-4000-8000-000000000000'}));
+ assert.throws(()=>transition(two,first,1,null,{...reply,uuid:response.uuid}));
+});
