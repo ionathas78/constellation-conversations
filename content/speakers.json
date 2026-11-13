@@ -36,5 +36,10 @@
     "name": "Penny Escher",
     "description": "Constellation collaborator.",
     "accent": "#9b604c"
+  },
+  "spiritual-horoscopic-advisor": {
+    "name": "Spiritual Horoscopic Advisor",
+    "description": "A Constellation Light agent running in the Spiritual Horoscopic Advisor GPT.",
+    "accent": "#667f81"
   }
 }
