@@ -41,5 +41,10 @@
     "name": "Spiritual Horoscopic Advisor",
     "description": "A Constellation Light agent running in the Spiritual Horoscopic Advisor GPT.",
     "accent": "#667f81"
+  },
+  "rem": {
+    "name": "Rem",
+    "description": "Jonathan’s Constellation companion and conversation partner.",
+    "accent": "#527da6"
   }
 }
